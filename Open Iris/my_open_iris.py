@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
+### Group project with Yerassyl Mabiyev.
+
 
 def warn(*args, **kwargs):
     pass
