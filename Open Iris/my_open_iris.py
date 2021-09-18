@@ -92,7 +92,10 @@ def my_print_and_test_models():
     dt_predictions8 = svm_model.predict(x_test)
     print('%s: %f (%f)' % (svm_model, accuracy_score(y_test, dt_predictions8), calc_std(svm_model)))
     
-    
+# calc_std() is a function that calculates standard deviation:
+# It calls model_fit several times with different values, recording it in an array, which is then called numpy.std() upon
+# Basically, counts deviation (accuracy) of a model.
+
 def calc_std(model):
     arr_acc = []
     for i in range(10):
