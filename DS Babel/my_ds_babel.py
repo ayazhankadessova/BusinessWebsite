@@ -4,6 +4,7 @@ import pandas as pd
 from sqlite3 import Error
 import csv
 
+### Group project with Yerassyl Mabiyev.
 
 def sql_to_csv(connection):
     my_list = []
