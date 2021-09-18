@@ -13,14 +13,14 @@ Another comment: If insufficient data, INSERT "0" inside of the list-row.
 
 #######################sql_to_csv#################
 
-Ayazhan did that one - uses cursor and iteratively reads file, then writes into list_fault_lines.csv
+Uses cursor and iteratively reads file, then writes into list_fault_lines.csv
 
 returns list if needed - that one needs some work, it does not work on my machine, yet works on hers. Very strange indeed. Too bad!
 
 #######################Testing#################### CSV TO SQL
 Create a database inside of the folder you are working in and copy its' path:
 
-conn = sqlite.connect('database.path') or something like this i dont remember
+conn = sqlite.connect('database.path')
 
 csv_to_sql(conn, 'list_volcano.csv') - THIS WRITES list_volcano.csv INTO DATABASE WHICH YOU HAVE CREATED. CONGRATULATIONS. NOW YOU CAN TEST SQL_TO_CSV METHOD:
 
