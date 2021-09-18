@@ -1,7 +1,9 @@
 import re
 import csv
 from typing import final
-###Comment to the peer reviewer: 
+
+### Group project with Yerassyl Mabiyev.
+
 """
 EXECUTE TO RUN IT. There is a function call in the end if you wish to look at it.
 
