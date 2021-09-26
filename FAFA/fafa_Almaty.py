@@ -3,7 +3,6 @@ import re
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 
-
 s = HTMLSession()
 
 url_initial = 'https://fa-fa.kz/search_load/gruzy-almaty/'
