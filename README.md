@@ -3,6 +3,7 @@
 Projects that were accomplised during the QWANT DS Track.
 
 1. **DS Babel**
+
 Using cursor and iteratively reading an sql file, then writing it into a csv; converting a csv to sql through queries and Python's sqlite3 module.
 
 2. **FAFA** 
