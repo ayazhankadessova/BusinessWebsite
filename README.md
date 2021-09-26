@@ -18,6 +18,7 @@ Using cursor and iteratively reading an sql file, then writing it into a csv; co
 I summarized Projects steps in the BlogPost: https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .
 
 3. **Github Scraper**
+
 Using Python's requests and beautifulsoup4 modules, returning a CSV of the TOP 25 trending repositories from Github's page (https://github.com/trending). Following information is included: Developer, Repository Name, Number of Stars.
 
 4. **Open Iris**
