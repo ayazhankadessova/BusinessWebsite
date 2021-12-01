@@ -1,4 +1,4 @@
-**Two Inputs: **
+**Two Inputs:**
 
 1. Patients dataset - Sheet1.csv
 
