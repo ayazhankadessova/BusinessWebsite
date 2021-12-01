@@ -34,7 +34,7 @@ Loading the dataset with pandas; Summarizing the dataset; Visualizing the datase
 Immersing in the NBA game dataset, parsing a csv, which describes both teams' players' game activities to
 create a table, separately for home and away team, with statistics (FG, FGA, FG%, 3P, 3PA, FT) of all players by finding keywords with Python's Regex Module. Additional calculations were done for some stats.
 
-7. **Hospital Admitting System Simulation**
+7. **Hospital Admitting System Simulation** 
 
 >1. Reading the Patients dataset - Sheet1.csv, new_Diseases and Symptoms - Sheet1.csv.
 >2. Shuffle the 'Patients dataset - Sheet1.csv', Add pateients to the hospital based on the following critera: (used **OOP for Patient and Hospital data structures**) 
