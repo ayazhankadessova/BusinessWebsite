@@ -1,4 +1,4 @@
-Two Inputs: 
+**Two Inputs: **
 
 1. Patients dataset - Sheet1.csv
 
@@ -26,7 +26,7 @@ Output: 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv'.
 
 5. Visualizing the frequency of diseases of Admitted Patients with matplotlib. 
 
-** Every time the code is run, the output 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv' will be different because the 'Patients dataset - Sheet1.csv' will always be shuffled differentely. **
+**Every time the code is run, the output 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv' will be different because the 'Patients dataset - Sheet1.csv' will always be shuffled differentely.**
 
 Hence, the bar plot will be different for every run.
 
