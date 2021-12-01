@@ -53,10 +53,9 @@ Hence, the bar plot will be different for every run.
 8. **RFM Analysis**
 
 >1. Use the public dataset: https://www.kaggle.com/olistbr/brazilian-ecommerce, namely olist_orders_dataset.csv and olist_order_payments_dataset.csv files.
->2. Import all the necessary libraries and read the files.
->3. Convert the date of delivery of the order by the original carrier (order_delivered_carrier_date) to datetime64. -> as we are going to base our calculations on it.
->4. Create an index order_id and connect the datasets through it.
->5. Since the dataset is not recent, we will use max + 1 instead of the current date. To create Recency, Frequency and Monetary for every customer, group the records through customer_id. -> RFM Table is ready!
->6. Assigning grades. Split into a range from 1 to 5. The wider the range, the more accurate our groups are, but at the same time, it is more challenging to work with a large number of combinations.
->7. Segmented_rfm Table is ready! RFM score of 413 means: r_quartile = 4, f_quartile = 1, m_quartile = 3.
->8. Separately, the average recency/frequency/monetary_value values for all RFMScore can be seen using matplotlib.
+>2. Convert the date of delivery of the order by the original carrier (order_delivered_carrier_date) to datetime64. -> as we are going to base our calculations on it.
+>3. Create an index order_id and connect the datasets through it.
+>4. Since the dataset is not recent, we will use max + 1 instead of the current date. To create Recency, Frequency and Monetary for every customer, group the records through customer_id. -> RFM Table is ready!
+>5. Assigning grades. Split into a range from 1 to 5. The wider the range, the more accurate our groups are, but at the same time, it is more challenging to work with a large number of combinations.
+>6. Segmented_rfm Table is ready! RFM score of 413 means: r_quartile = 4, f_quartile = 1, m_quartile = 3.
+>7. Separately, the average recency/frequency/monetary_value values for all RFMScore can be seen using matplotlib.
