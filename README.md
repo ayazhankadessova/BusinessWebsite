@@ -33,3 +33,17 @@ Loading the dataset with pandas; Summarizing the dataset; Visualizing the datase
 
 Immersing in the NBA game dataset, parsing a csv, which describes both teams' players' game activities to
 create a table, separately for home and away team, with statistics (FG, FGA, FG%, 3P, 3PA, FT) of all players by finding keywords with Python's Regex Module. Additional calculations were done for some stats.
+
+7. **Hospital Admitting System Simulation**
+
+>1. Reading the Patients dataset - Sheet1.csv, new_Diseases and Symptoms - Sheet1.csv.
+>2. Shuffle the 'Patients dataset - Sheet1.csv', Add pateients to the hospital based on the following critera: (used **OOP for Patient and Hospital data structures**) 
+- Does the admittied patients number exceed the capacity?
+- Can the hospital assign two symptoms of the patient to any of the diseases that it treats (get from new_Diseases and Symptoms - Sheet1.csv).
+>3. Create a csv for Admitted/not Admitted patients.
+Output: 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv'.
+>4. Recommend Different Lung Diseases treatment hospitals to not admitted patients.
+- Scrape https://www21.ha.org.hk/smartpatient/SPW/en-us/Useful-Resource/Patient-Group/List/?guid=ebe3f3f7-cd2b-4573-882e-cfd61eac55ac with **BeautifulSoup** -> make a Dataframe -> create a csv of recommended hospitals.
+>5. Visualizing the frequency of diseases of Admitted Patients with **matplotlib.**
+** Every time the code is run, the output 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv' will be different because the 'Patients dataset - Sheet1.csv' will always be shuffled differentely. **
+Hence, the bar plot will be different for every run.
