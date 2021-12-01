@@ -45,5 +45,7 @@ Output: 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv'.
 >4. Recommend Different Lung Diseases treatment hospitals to not admitted patients.
 - Scrape https://www21.ha.org.hk/smartpatient/SPW/en-us/Useful-Resource/Patient-Group/List/?guid=ebe3f3f7-cd2b-4573-882e-cfd61eac55ac with **BeautifulSoup** -> make a Dataframe -> create a csv of recommended hospitals.
 >5. Visualizing the frequency of diseases of Admitted Patients with **matplotlib.**
-** Every time the code is run, the output 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv' will be different because the 'Patients dataset - Sheet1.csv' will always be shuffled differentely. **
+
+** Every time the code is run, the output 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv' will be different because the 'Patients dataset - Sheet1.csv' will always be shuffled differentely.**
+
 Hence, the bar plot will be different for every run.
