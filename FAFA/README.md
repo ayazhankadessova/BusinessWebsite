@@ -12,7 +12,6 @@ I summarized Projects steps in the BlogPost:
 > ** https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .** 
 
 <p align="center">
-  <img src="your_relative_path_here" width="350" title="hover text">
   <img src="https://user-images.githubusercontent.com/86869537/184582147-7ce19889-8b1f-49bb-b00e-04f328f9cccd.png" width="350" alt="accessibility text">
 </p>
 
