@@ -11,6 +11,9 @@ In this project, I
 I summarized Projects steps in the BlogPost:
 > ** https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .** 
 
+![Uploading Screenshot 2022-08-15 at 11.33.18 AM.png…]()
+
+
 Check it out!
 For more details, see the fafa_Almaty.ipynb Jupiter Notebook.
 
