@@ -9,7 +9,7 @@ In this project, I
 6.	Presented Suggestions on a profitable business model
 
 I summarized Projects steps in the BlogPost:
-> **https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .** 
+> ** https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .** 
 
 Check it out!
 For more details, see the fafa_Almaty.ipynb Jupiter Notebook.
