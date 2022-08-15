@@ -10,12 +10,12 @@ In this project, I
 
 I summarized Projects steps in the BlogPost:
 
-* https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .*
+* https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html 
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/86869537/184582147-7ce19889-8b1f-49bb-b00e-04f328f9cccd.png" width="800" alt="accessibility text">
 </p>
 
-Check it out!
-For more details, see the fafa_Almaty.ipynb Jupyter Notebook.
+### Check it out!
+** For more details, see the fafa_Almaty.ipynb Jupyter Notebook. **
 
