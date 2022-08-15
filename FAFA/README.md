@@ -15,5 +15,5 @@ I summarized Projects steps in the BlogPost:
 
 
 Check it out!
-For more details, see the fafa_Almaty.ipynb Jupiter Notebook.
+For more details, see the fafa_Almaty.ipynb Jupyter Notebook.
 
