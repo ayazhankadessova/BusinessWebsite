@@ -11,7 +11,7 @@ In this project, I
 I summarized Projects steps in the BlogPost:
 > ** https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .** 
 
-![Screenshot 2022-08-15 at 11.37.06 AM.png]()
+<img width="1440" alt="Blogpost" src="https://user-images.githubusercontent.com/86869537/184582147-7ce19889-8b1f-49bb-b00e-04f328f9cccd.png">
 
 
 Check it out!
