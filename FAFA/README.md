@@ -10,7 +10,7 @@ In fafa_Almaty.ipynb:
 5.	Answered 3 Business Questions through calculations and visualizations with seaborn and matplotlib.pyplot
 6.	Presented Suggestions on a profitable business model
 
-I summarized Projects steps in the BlogPost:
+#### I summarized Projects steps in the BlogPost:
 
 * https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html 
 
