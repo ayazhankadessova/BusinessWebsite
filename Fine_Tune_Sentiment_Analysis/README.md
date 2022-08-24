@@ -2,7 +2,7 @@
 
 This model is a fine-tuned version of [bert-base-chinese](https://huggingface.co/bert-base-chinese) on the 24000 samples of the [Douban Movies Short Comments](https://www.kaggle.com/datasets/utmhikari/doubanmovieshortcomments) from [Kaggle](https://www.kaggle.com).
 
-[Douban.com](https://en.wikipedia.org/wiki/Douban#:~:text=Douban.com%20(Chinese%3A%20豆瓣,and%20activities%20in%20Chinese%20cities) (Chinese: 豆瓣; pinyin: Dòubàn), launched on 6 March 2005, is a Chinese social networking service website that allows registered users to record information and create content related to film, books, music, recent events, and activities in Chinese cities.
+* [Douban.com](https://en.wikipedia.org/wiki/Douban#:~:text=Douban.com%20(Chinese%3A%20豆瓣,and%20activities%20in%20Chinese%20cities) (Chinese: 豆瓣; pinyin: Dòubàn), launched on 6 March 2005, is a Chinese social networking service website that allows registered users to record information and create content related to film, books, music, recent events, and activities in Chinese cities.
 
 It achieves the following results on the evaluation set of 6000 samples:
 - Loss: 0.4446
