@@ -7,3 +7,7 @@
 5. Making some predictions.
 
 Must-see example of data science is the iris dataset. In this project, I tried to predict which class of iris plant a plant belongs to based on its characteristics.
+
+### Iris Dataset:
+
+https://storage.googleapis.com/qwasar-public/track-ds/iris.csv
