@@ -1,9 +1,9 @@
 import requests
 import bs4 as bs
+
 def request_github_trending(url):
     r = requests.get(url).text
     return r
-
 
 def extract(page):
     soup = bs.BeautifulSoup(request_github_trending('https://github.com/trending'), 'lxml')
@@ -17,8 +17,6 @@ def extract(page):
             i+=1
 
     return concat
-
-
     
 def transform(html_repos):
     
