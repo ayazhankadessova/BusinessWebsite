@@ -21,20 +21,24 @@ Using cursor and iteratively reading an sql file, then writing it into a csv; co
 
 I summarized Projects steps in the BlogPost: https://fafkz-scraping.blogspot.com/2021/09/scraping-fafakz-for-almaty-delivery.html .
 
-4. **Github Scraper**
+4. **Fine Tune**
+
+Fune tuning for Sentiment Analysis Using PyTorch to create [bert-finetuned-semantic-chinese](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese). Result Model: [here](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese)
+
+5. **Github Scraper**
 
 Using Python's requests and beautifulsoup4 modules, returning a CSV of the TOP 25 trending repositories from Github's page (https://github.com/trending). Following information is included: Developer, Repository Name, Number of Stars.
 
-5. **Open Iris**
+6. **Open Iris**
 
 Loading the dataset with pandas; Summarizing the dataset; Visualizing the dataset with seaborn; Evaluating algorithms with sklearn's DecisionTreeClassifier, KNeighborsClassifier, LogisticRegression, SVC; Making predictions about which class of iris plant does a plant belongs to based on its characteristics through training the data with sklearn's train_test_data, and showing the accuracy score.
 
-6. **NBA Game Analysis**
+7. **NBA Game Analysis**
 
 Immersing in the NBA game dataset, parsing a csv, which describes both teams' players' game activities to
 create a table, separately for home and away team, with statistics (FG, FGA, FG%, 3P, 3PA, FT) of all players by finding keywords with Python's Regex Module. Additional calculations were done for some stats.
 
-7. **Hospital Admitting System Simulation** 
+8. **Hospital Admitting System Simulation** 
 
 >1. Reading the Patients dataset - Sheet1.csv, new_Diseases and Symptoms - Sheet1.csv.
 >2. Shuffle the 'Patients dataset - Sheet1.csv', Add pateients to the hospital based on the following critera: (used **OOP for Patient and Hospital data structures**) 
@@ -50,7 +54,7 @@ Output: 'Hospital_admitted.csv', 'Hospital_NOTadmitted.csv'.
 
 Hence, the bar plot will be different for every run.
 
-8. **RFM Analysis**
+9. **RFM Analysis**
 
 >1. Use the public dataset: https://www.kaggle.com/olistbr/brazilian-ecommerce, namely olist_orders_dataset.csv and olist_order_payments_dataset.csv files.
 >2. Convert the date of delivery of the order by the original carrier (order_delivered_carrier_date) to datetime64. -> as we are going to base our calculations on it.
