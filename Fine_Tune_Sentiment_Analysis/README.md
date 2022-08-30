@@ -1,4 +1,4 @@
-## Fune tuning for Sentiment Analysis Using PyTorch to create [bert-finetuned-semantic-chinese](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese). Result Model: [here](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese)
+## Fine tuning for Sentiment Analysis Using PyTorch to create [bert-finetuned-semantic-chinese](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese). Result Model: [here](https://huggingface.co/Ayazhankad/bert-finetuned-semantic-chinese)
 
 This model is a fine-tuned version of [bert-base-chinese](https://huggingface.co/bert-base-chinese) on the 24000 samples of the [Douban Movies Short Comments](https://www.kaggle.com/datasets/utmhikari/doubanmovieshortcomments) from [Kaggle](https://www.kaggle.com).
 
