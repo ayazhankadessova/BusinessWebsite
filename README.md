@@ -63,3 +63,13 @@ Hence, the bar plot will be different for every run.
 >5. Assigning grades. Split into a range from 1 to 5. The wider the range, the more accurate our groups are, but at the same time, it is more challenging to work with a large number of combinations.
 >6. Segmented_rfm Table is ready! RFM score of 413 means: r_quartile = 4, f_quartile = 1, m_quartile = 3.
 >7. Separately, the average recency/frequency/monetary_value values for all RFMScore can be seen using matplotlib.
+
+10. **Games in Java**
+
+Game programes created during the COMP2026/COMP2045 (Programming and Problem-Solving; Programming Using Object-Oriented Approach) courses:
+
+- [6-nimmit](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Games/6-nimmt)
+- [Connect Four](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Games/ConnectFour)
+- [Tower Defence](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Games/TowerDefense)
+
+Skills: Inheritance/List/Exception Handling/Polymorphism/Arrays/etc.
