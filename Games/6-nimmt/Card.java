@@ -57,18 +57,14 @@ public class Card {
     }
 
     /**
-     * To print a card. This method has been done for you.
-     * 
-     * You don't need to change it and you should not change it.
+     * To print a card.
      */
     public void print() {
         System.out.printf("%d(%d)", number, bullHead);
     }
 
     /**
-     * To return the string of a card. This method has been done for you
-     * 
-     * You don't need ot change it and you should not change it.
+     * To return the string of a card.
      */
     public String toString() {
         return number + "(" + bullHead + ")";
