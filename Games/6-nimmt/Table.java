@@ -36,8 +36,6 @@ public class Table {
     /**
      * Default constructor
      * 
-     * In the constructor, you should perform the following tasks:
-     * 
      * 1. Initialize cards for play. Construct enough number of cards
      * to play. These cards should be unique (i.e., no two cards share the same
      * number). The value of card must be between 1 to 104. The number of bullHead
@@ -105,8 +103,7 @@ public class Table {
     /**
      * This method is to find the correct stack that a card should be added to
      * according to the rule. It should return the stack among which top-card of
-     * that stack is the largest of those smaller than the card to be placed. (If
-     * the rule sounds complicate to you, please refer to the game video.)
+     * that stack is the largest of those smaller than the card to be placed.
      * 
      * In case the card to be place is smaller than the top cards of all stacks,
      * return -1.
