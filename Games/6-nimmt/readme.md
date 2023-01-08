@@ -1,5 +1,4 @@
-![](hkbu.png)
-# COMP2026/COMP2046 Programming Assignment 2 - 6 nimmt (2022-23 Semester 1)
+# 6 nimmt (COMP2046 Programming Assignment 2, 2022-23 Semester 1)
 
 # Introduction
 
