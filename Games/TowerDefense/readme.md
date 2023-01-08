@@ -1,4 +1,4 @@
-![](hkbu.png)
+<img src="hkbu.png.jpg" alt="hkbu" width="200"/>
 # COMP2026 Programming Assignment 3 - Tower Defense (2022-23 Semester 1)
 
 ![](towerdefense.png)  
