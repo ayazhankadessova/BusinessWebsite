@@ -1,7 +1,5 @@
-<img src="hkbu.png" alt="hkbu" width="200"/>
+<img src="hkbu.png" alt="hkbu" width="200"/> <img src="towerdefense.png" alt="td" width="400"/>
 # COMP2026 Programming Assignment 3 - Tower Defense (2022-23 Semester 1)
-
-<img src="towerdefense.png" alt="td" width="300"/>
 
 # Game Files in "td" Folder!
 
