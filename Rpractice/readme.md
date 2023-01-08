@@ -10,7 +10,7 @@ Assignments done during the ECON3096: Causal Inference: Capturing Cause-and-Effe
 
 ## Assignment Descriptions
 
-* [Assignment 1](https://github.com/ayazhankadessova/Rpractice/tree/main/Assignment1): Counterfactual outcome, independent/dependent variables, bivariate regresion
-* [Assignment 2](https://github.com/ayazhankadessova/Rpractice/tree/main/Assignment_2): Identificantion, Multivariate Regression, Controls, Causal Diagrams, R^2, Omitting
-* [Assignment 3](https://github.com/ayazhankadessova/Rpractice/tree/main/Assignment_3): Experiment and Difference-in-Differences, DID in non-experiment setting, Matching Fixed Effects
-* Final: Referee Report (black and white wage gap that shows discrimination of labor market), Replication Project (Treatment effect, Quadratic relations, Regressions, etc).
+* [Assignment 1](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Rpractice/Assignment1): Counterfactual outcome, independent/dependent variables, bivariate regresion
+* [Assignment 2](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Rpractice/Assignment_2): Identificantion, Multivariate Regression, Controls, Causal Diagrams, R^2, Omitting
+* [Assignment 3](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Rpractice/Assignment_3): Experiment and Difference-in-Differences, DID in non-experiment setting, Matching Fixed Effects
+* [Final: Referee Report](https://github.com/ayazhankadessova/Portfolio-Projects/tree/main/Rpractice/Final) (black and white wage gap that shows discrimination of labor market), Replication Project (Treatment effect, Quadratic relations, Regressions, etc).
