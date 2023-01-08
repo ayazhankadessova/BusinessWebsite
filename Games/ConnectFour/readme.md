@@ -1,13 +1,10 @@
 ![](hkbu.png)
-# COMP2026/COMP2045 Programming Assignment 1 - Connect4
+# COMP2026/COMP2045 Programming Assignment 1 - Connect4 (2022-23 Semester 1)
 
-## 2022-23 Semester 1
+# Introduction
 
-* Designed by: [Dr. Kevin Wang](mailto:kevinw@comp.hkbu.edu.hk)
-* Assignment Website: [GitHub](https://github.com/khwang0/COMP2026-2223PA1)
-* Download the starter code: [Connect4Old.java](Connect4.java) 
-* Download the demo program: [here](demo.jar)
-* Download everything from the assignment: [here](https://github.com/khwang0/COMP2026-2223PA1/archive/refs/heads/master.zip)
+As a First Assignment for COMP2026/COMP2045 (Programming and Problem-Solving; Programming Using Object-Oriented Approach), I designed a Connect 4 Game.
+We were given a [sample program](demo.jar) and had to write code which would replicate its behaviour.
 
 > To run the demo program, type the following in your terminal:
 > 
@@ -15,11 +12,7 @@
 > > java -jar demo.jar
 > ```
 
-# Introduction
-
-As a First Assignment for COMP2026/COMP2045 (Programming and Problem-Solving; Programming Using Object-Oriented Approach), I designed a Connect 4 Game.
-We were given a [sample program](demo.jar) and had to write code which would replicate its behaviour.
-With the help of this Assignment, I learned:
+# With the help of this Assignment, I learned:
 
 - The importance of Understanding the task/game and only then starting to code!
 - Using basic data structures, such as 1d and 2d arrays, how memory allocation works, method types, etc; practice on parameter passing/method construction.
