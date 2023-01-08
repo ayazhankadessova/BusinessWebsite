@@ -1,0 +1,180 @@
+---
+title: "Final"
+output: html_document
+date: "2022-12-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+```{r}
+data <- read.delim("/Users/ayazhan/Desktop/A1_data.txt", sep=",")
+```
+
+
+
+```{r}
+View(data)
+#Table 3
+#panel A
+#replication fact accuracy index regression
+index_fact_accuracy <- data$iraqdead + data$libby + data$miers
+replication_1 <- lm(index_fact_accuracy ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_1)
+#replication specific issue index regression
+index_specific_issue <- data$mostimp_scandals + data$iraq_post + data$iraq + data$leak + data$alito
+replication_2 <- lm(index_specific_issue ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_2)
+#replication  broad policy index regression
+index_broad_policy <- data$repfavorable + data$demunfavorable + data$bushapproval + data$conservative
+replication_3 <- lm(index_broad_policy ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_3)
+
+#panel B
+#replication fact accuracy index regression
+replication_4 <- lm(index_fact_accuracy ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_4)
+#replication specific issue index regression
+replication_5 <- lm(index_specific_issue ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_5)
+#replication  broad policy index regression
+replication_6 <- lm(index_broad_policy ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_6)
+
+
+#Table 4
+#Panel A
+#voted in 2005 election A
+replication_7 <- lm(data$voted ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_7)
+#voted in 2005 election B
+replication_8 <- lm(data$voted2005g ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_8)
+#voted in 2006 election B
+replication_9 <- lm(data$voted2006g ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_9)
+#voted for Democrats set to missing
+replication_10 <- lm(data$voteddem ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_10)
+#voted for Democrats set to zero
+replication_11 <- lm(data$voteddem_all ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_11)
+
+#panel B
+#voted in 2005 election A
+replication_12 <- lm(data$voted ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_12)
+#voted in 2005 election B
+replication_13 <- lm(data$voted2005g ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_13)
+#voted in 2006 election B
+replication_14 <- lm(data$voted2006g ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_14)
+#voted for Democrats set to missing
+replication_15 <- lm(data$voteddem ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_15)
+#voted for Democrats set to zero
+replication_16 <- lm(data$voteddem_all ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_16)
+
+install.packages("stargazer")
+library(stargazer)
+#table: Table 3, Panel A
+stargazer(replication_1, replication_2, replication_3, type = "text")
+#table: Table 3, Panel B
+stargazer(replication_4, replication_5, replication_6, type = "text")
+#table: Table 4, Panel A
+stargazer(replication_7, replication_8, replication_9, replication_10, replication_11, type = "text")
+#table: Table 4, Panel B
+stargazer(replication_12, replication_13, replication_14, replication_15, replication_16, type = "text")
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Question 2
+
+```{r}
+	Overall, our replication results failed to follow results presented in this paper. There are two possible explanations, the first states about failure to follow vague descriptions of the model during the replication (the model description is poor in this paper and authors did not include algebraic form of the model, also, authors failed to include detailed description of dependent variables, for instance, fact accuracy index is not specified if this is the mean or sum of factors included in the paper), and the second states that authors included different numbers.
+	When it comes to inference and statistical significance we found statistically insignificant results for post, times, and paper (either of magazines) for Table 3 (at alpha = 0.05), while Table 4 results mostly statistically insignificant, with only two exceptions such as:
+•	Panel A, 2006 elections, Times treatment is statistically significant at 5% (p-value is 0.03)
+•	Panel B, 2006 elections, Paper treatment is statistically significant at 5% (p-value is 0.02)
+```
+
+## Question 3
+
+```{r}
+## As we can see from Table 1, the effect of gender on Washington Post treatment is statistically insignificant (p-value = 0.108), while the the post treatment itself is statistically significant.
+#Q3
+#voted for Democrats set to missing, interaction term to see the effect of gender
+replication_17 <- lm(data$voteddem ~ data$post*data$Bfemale + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_17)
+stargazer(replication_17, type="text", keep.stat = c("n","rsq"))
+
+```
+## Question 4
+
+```{r}
+
+## According to previous replication, the age in the form of reported age was always statistically significant at 5% significance level. At this point, to view the non-linear relationship it was decided to add quadratic term (reportedage_sq) as shown in Table 2. Furthermore, both coefficients before reportedage and reportedage_sq are statistically significant at 5% significance level (p-values are 0.00026 and 0.000298, respectively).
+
+#voted in 2005 election A
+reportedage_sq <- data$reportedage^2
+replication_18 <- lm(data$voted ~ data$post + data$times + data$Bfemale + data$reportedage + reportedage_sq + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator)
+summary(replication_18)
+stargazer(replication_18, type="text", keep.stat = c(“n","rsq"))
+
+
+```
+## Question 5
+
+```{r}
+## Overall, reviewing Table 3 and Table 4 results for logit regression we can see that results are almost identical to liner regression model. As in linear regression model, Times treatment in panel A and post Treatment in panel B are statistically significant at 5% significance level, thus we can reject the null hypothesis that states that there is zero relationship between treatment and dependent variables.
+ # R code:
+#Q5
+#Table 4
+#Panel A
+#voted in 2005 election A
+replication_19 <- glm(data$voted ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_19)
+#voted in 2005 election B
+replication_20 <- glm(data$voted2005g ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_20)
+#voted in 2006 election B
+replication_21 <- glm(data$voted2006g ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_21)
+#voted for Democrats set to missing
+replication_22 <- glm(data$voteddem ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_22)
+#voted for Democrats set to zero
+replication_23 <- glm(data$voteddem_all ~ data$post + data$times + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_23)
+
+#panel B
+#voted in 2005 election A
+replication_24 <- glm(data$voted ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_24)
+#voted in 2005 election B
+replication_25 <- glm(data$voted2005g ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_25)
+#voted in 2006 election B
+replication_26 <- glm(data$voted2006g ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_26)
+#voted for Democrats set to missing
+replication_27 <- glm(data$voteddem ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_27)
+#voted for Democrats set to zero
+replication_28 <- glm(data$voteddem_all ~ data$paper + data$Bfemale + data$reportedage + data$Bvoted2001 + data$Bvoted2002 + data$Bvoted2004 + data$Bconsumer + data$Bgetsmag + data$Bpreferdem + data$wave2 + data$cells + data$dateoperator, binomial)
+summary(replication_28)
+
+#table: Table 4, Panel A
+stargazer(replication_19, replication_20, replication_21, replication_22, replication_23, type = "text", keep.stat = c("n","rsq"))
+#table: Table 4, Panel B
+stargazer(replication_24, replication_25, replication_26, replication_27, replication_28, type = "text", keep.stat = c("n","rsq"))
+
+```
+

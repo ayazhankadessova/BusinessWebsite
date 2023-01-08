@@ -1,0 +1,250 @@
+---
+title: "ECON3096 - Casual Inference"
+subtitle: 'Assignment1'
+author: "CHEN Ting"
+date: "29 September, 2022"
+output:
+  html_document: null
+  theme: paper
+  pdf_document: default
+highlight: kate
+editor_options:
+  chunk_output_type: Console
+---
+
+
+1. Consider the following three causal questions:
+
+- Many firms, particularly in southern European countries, are small, and owned and run by families. Are family owned firms growing more slowly than firms with a dispersed ownership?  
+
+a)	Outcome variable: growth of firms, including expansion of revenue or their output. Treatment: firm ownership type: family owned/dispersed.
+
+b)	Counterfactual outcome (Y0i) - firm growth rate when i is a dispersed firm. Counterfactual outcome (Y1i) - firm growth rate when i is a family-owned firm. 0 - Dispersed, 1 - family-owned firm.
+
+c)	There are many possible channels. On a positive note, family-owned firms may benefit from stakeholder efficiency. Stronger ties with managers, employees, and customers in dispersed firms, can result in higher trust, loyalty, and motivation, all of which are likely to lead to increased growth rates. Alternatively, family-owned firms will likely suffer from inefficient and outdated management practices. The firms may want to secure the family succession, whereas dispersed firms are likely to focus on market-determined modern management choices for a better outcome, beating family-owned firms.
+
+d)	A possible source of selection bias:
+●	Survivorship bias
+In developing countries, family-owned firms that are legally registered and pay tax are the ones who can afford to do so, meaning they have higher growth levels than the whole group. If the research only included legally registered firms, there was a “screening contest,” which pushes out unsuccessful variables due to their lack of visibility. As a result, such a comparison will overestimate the growth of family-owned firms.
+●	Low/Slow growth
+Family-owned firms in the research may be slow or have low growth because family-owned firms with high productivity or high growth potential attract outside investments. After such investment, these successful family-owned firms become dispersed and are never comprehended in our research, which will underestimate the growth of family-owned firms.
+
+
+- What is the effect of taking a job in a finance position compared to a human resources position on the salary earned by an economics graduate?  
+
+a)	Outcome variable: salary earned. Treatment: Employment position: taking a job in Finance or Human resources position.
+
+b)	Counterfactual outcome (Y0i) - salary of a graduate when i is working in a Human Resources position. Counterfactual outcome (Y1i) - salary of a graduate when i is working in a Finance position. 0 - HR, 1 - Finance position.
+
+c)	A plausible channel is: an economics education provides students with math skills that are relevant for Finance positions, such as financial management. So, an economics student is more likely to secure a better-paid position in this sector than in Human Resources, which does not match the courses they studied during university (they may have to start with training, which is paid little). Moreover, the average labor market is known to pay more for the tremendous quantitative aptitude skills linked to the Finance sector than for human management and recruitment skills needed for Human Resources.
+
+d)	A possible source of selection bias:
+
+-	Labour market values math skills more, so a Finance position is likely to have better salary for graduates from whichever background, not just economics.
+
+-	Only researching starting salaries. Having position-specific knowledge may pay more in the beginning. However, in the future, having intersectional knowledge usually has higher demand as firms' sections need to understand each other. Hence, if economics student who already has math skills chooses to work in Human Resources to get human management skills, they will in the future have the ability to work in bigger companies or in higher positions in current firms where all sections cooperate and intersectional knowledge is valued and well-paid. So, intersectional knowledge from an HR position will likely pay more than not gaining new skills continuing in Finance due to the potential of landing a big firm or higher position. So, research conducted only on starting salaries may underestimate the salary of an economics graduate going to HR. 
+
+- What is the effect of mortgage interest rates on the number of new housing starts?  
+
+a)	Outcome variable: the quantity of new housing starts in a given period. Treatment: mortgage interest rates: low mortgage interest rates or high mortgage interest rates. 
+
+b)	Counterfactual outcome (Y0i) - quantity of new housing starts in period i when mortgage interest rates are low. Counterfactual outcome (Y1i) - quantity of new housing starts in period i when mortgage interest rates are high. 0 - low, 1 - high mortgage interest rates.
+
+c)	A plausible channel is:
+-	High mortgage interest rates mean high monthly mortgage requirements, so there are higher opportunity costs of building or buying a house and as people won’t be able to spend this money in other investments. So when the mortgage interest rate is higher, there fewer people may commit to housing starts because they won’t want to waste money on interest and may want to spend it more differently.
+-	Increased monthly income, which makes high mortgage interest rates more affordable and increases the quantity of houses built even with high monthly mortgage payment requirements. 
+
+d)	A possible source of selection bias: Economical condition.
+-	Downward bias
+The central bank lowers interest rates, including mortgage interest rates if the economy experiences economic recession. But, during the recession, people lack income and are pessimistic regarding their ability to afford to pay off their mortgages. So, even with low interest rates due to financial uncertainty, people will be unlikely to build houses. As a result, it will lead to a downward bias, underestimating the effect of low mortgage interest rates on the number of housing starts.
+ 
+-	Upward bias 
+The central bank raises interest rates, including mortgage interest rates if the economy experiences economic growth and boom. However, because firms pay higher salaries to maintain workers’ motivation at high levels to meet the extra demand, people have higher incomes. As a result, they are optimistic about their ability to pay off the mortgage. Hence, they are more likely to build houses despite higher opportunity costs associated with higher rates. This will lead to an upward bias, an overly optimistic attitude toward high mortgage interest rates.
+
+For each of these questions answer the following:  
+
+(a) What is the outcome variable and what is the treatment?  
+(b) Define the counterfactual outcomes $Y_{01}$ and $Y_{1i}$.  
+(c) What plausible causal channel(s) runs directly from the treatment to the outcome?  
+(d) What are possible sources of selection bias in the raw comparison of outcomes by treatment status? Which way would you expect the bias
+to go and why?  
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+rm(list=ls()) # Clear up the enviornment 
+setwd("/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ 3096/assignment") # Change the working directory as the path of the data file
+```
+
+2. Coming back to this example we had dicussed in class:  
+
+(a) What are the variance and standard deviation of the population mean $\overline{Y_i}$?
+
+σ^2 = (1-3.6)^2 + (2-3.6)^2 + (2-3.6)^2 + (3-3.6)^2 + (4-3.6)^2 + (4-3.6)^2 + (5-3.6)^2 + (5-3.6)^2 + (5-3.6)^2 + (5-3.6)^2 + (5-3.6)^2 = 2.04
+𝜎 = sqrt(σ^2) = sqrt(2.04) = 1.42828569
+
+```{r}
+library(plotrix)
+
+sample1 <- c(4,2,5,5)
+sample2 <- c(2,3,4)
+pop <- c(4,2,5,5,3,1,2,5,4,5)
+
+# 1) variance and standard deviation of the population mean Yi
+# sample var
+var(pop) # 2.266667
+#determine length of data
+n <- length(pop)
+#calculate population variance & sd
+var(pop) * (n-1)/n # 2.04
+sd(pop) * (sqrt((n-1)/n)) # 1.428286
+```
+
+(b) What is the standard error of the means of Samples 1 and Sample 2?
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+
+# 2) standard error of sample
+std.error(sample1) # 0.7071068
+std.error(sample2) # 0.5773503
+
+mean(sample1) # 4
+mean(sample2) # 3
+mean(pop) # 3.6
+sd(sample1) # 1.414214
+sd(sample2) # 1
+```
+
+(c) Suppose now we want to examine if the sample means of Sample 1 and Sample 2 are significant different from each other, what kind of test we shall use?
+
+We can use a two sample t-test (inferential statistic), which uses the t-statistic, the t-distribution values, and the degrees of freedom to find out statistical significance of the difference between the means of two samples and their relationship. We should also set the significance level and looking at p-value, if it is less that that level, conclude that the differences are similar.
+Overall, t-tests are used if data sets follow a normal distribution and have unknown variances, which is the case for us.
+
+d) What is the exact statisics number and what does it tell us about the difference?
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+t.test(sample1, sample2, var.equal = TRUE)
+```
+
+	Welch Two Sample t-test
+
+data:  sample1 and sample2
+t = 1.0954, df = 5, p-value = 0.3233
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.346609  3.346609
+sample estimates:
+mean of x mean of y 
+        4         3 
+        
+	Two Sample t-test
+
+data:  sample1 and sample2
+t = 1.0351, df = 5, p-value = 0.3481
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.483418  3.483418
+sample estimates:
+mean of x mean of y 
+        4         3 
+        
+The significance level, fixed probability of inaccurate elimination of null hypothesis which is in fact true (Type I Error) for a study is chosen before data collection. Here, we set the significance level to 5%. The value significant at 5% refers to p-value, which is less than 0.05. Using both Two Sample and Welch Two Sample t-test, we see that the p-value is greater than 0.05, which means that the differences between recognised values (means of Sample 1 and Sample 2) are insignificant because there is not enough evidence to reject the null hypothesis that the Sample means are all equal/similar. 
+
+3. Suppose we are interested in find out whether increasing the availability of computer for student could help to improve their test scores. We start from two variables: the number of computers per student and test scores for 5th graders, **comp_stu** and **testscr**.
+
+
+
+Load in the **caschool.dta** data for Q3  
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+require(haven) # load in the haven library to read the dta file
+ClassSize <- read_dta("caschool.dta") # read the caschool data file into R
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+summary(ClassSize) # get some summary statistics of the dataset
+```
+
+A data frame containing 420 observations on 14 variables.
+
+ - district: District code;  
+ - school: School name;  
+ - county: County name;  
+ - gr_span: Grade span of district;  
+ - enrl_tot: Total enrollment;  
+ - teachers: Number of teachers;  
+ - calw_pct:  Percent qualifying for CalWorks (income assistance);  
+ - meal_pct: Percent qualifying for reduced-price lunch;  
+ - computer: Number of computers;  
+ - testscr: Average test score; 
+ - comp_stu: Number of computers per student;  
+ - expn_stu: Number of expenditure per student;   
+ - str: Student-teacher ratio;  
+ - avginc: Average income;
+ - el_pct: Percent of English learners;
+ - read_scr: Average reading score;
+ - math_scr: Average math score.
+
+(a) Draw a distribution plot of test scores. Describe what you see.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+library("magrittr")
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(hrbrthemes)
+library(viridis)
+
+#pdf("/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ 3096/assignment/Distribution_plot_of_test_scores.pdf")
+
+ClassSize %>%
+  drop_na(testscr) %>% 
+  ggplot(aes(x=testscr)) +
+  geom_density(alpha=0.4) +
+  scale_fill_viridis(discrete=TRUE) +
+  scale_color_viridis(discrete=TRUE) +
+  labs(x="Average test scores",
+       y="Density",
+       caption = "Source: California school districts in 1999")
+
+#dev.off()
+```
+
+```{r}
+library(modeest)
+mean(ClassSize$testscr) #654.1565
+mfv(ClassSize$testscr) #616.30 661.85
+median(ClassSize$testscr) #654.45
+```
+
+
+(b) Draw a scatterplot of test scores versus number of computers per student. Describe in words what you see. 
+
+---
+Independent variable computers per student and dependent variable test scores.
+---
+
+According to the scatterplot, overall, there is a positive association/correlation between the independent variable ‘compstu’ - number of computers per student and the dependent variable ‘testscr’ - test scores of student, but it is not strong. However, one of the highest scores (more than 700) are achieved by students who have access to average fraction of a computer (0.2), not by students with the highest (0.4). Still, these are outliers because students with the same access also got one of the lowest marks (less than 620).Populations
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+plot(testscr ~ comp_stu, 
+data = ClassSize,
+main = "Scatterplot of TestScore and Computers Per student", 
+xlab = "Computer per Student(",
+ylab = "Test Score (Y)")
+```
+
+
+```{r}
+
+#pdf("/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ 3096/assignment/Scatter_TestScores_vs._ComputersPerStudent.pdf")
+
+plot(testscr ~ comp_stu, data = ClassSize,cex=1,pch=16,col="red", xlab="number of computers per student",ylab="test scores", main="Test scores vs. Computers per student")
+lm.two<-lm(testscr~comp_stu, data = ClassSize)
+abline(lm.two$coef, lwd=2)
+
+#dev.off()
+```
+
+

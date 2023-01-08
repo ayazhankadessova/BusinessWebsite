@@ -1,0 +1,354 @@
+---
+title: "ECON3096 - Casual Inference"
+subtitle: 'Assignment3'
+author: "CHEN Ting"
+date: "21 November, 2022"
+output:
+  html_document: null
+  theme: paper
+  pdf_document: default
+highlight: kate
+editor_options:
+  chunk_output_type: Console
+---
+```{r}
+rm(list=ls()) # Clear up the enviornment 
+setwd("/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ3096/Assignment_3") # Change the working directory as the path of the data file
+```
+
+
+Let us load in the **wage.csv** data for Assignment 2.   
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(haven)
+library(sjPlot)
+library(sjlabelled)
+library(ggplot2)
+read_csv("wage.csv")  -> wage # read the wage data file into R
+summary(wage)
+```
+
+A data frame containing 4360 observations on 36 variables.
+
+ - nr: Individual identifier;  
+ - year: Year;  
+ - wage: Log of hourly wage
+ - hours: Hourly wage ($)
+ - ag: Age;  
+ - black: Black (=1);  
+ - hisp: Hispanic (=1);  
+ - exper: Years of experience;  
+ - mar: Married (=1);  
+ - school: Years of schooling;  
+ - hlth: Has health disability (=1);  
+ - union: Wage set by collective bargaining;  
+ - rur: Lives in rural area; 
+ - Regional dummies 
+  - s: Lives in south
+  - ne: Lives in North East
+  - nc: Lives in Northern Central
+ - Industry dummies 
+  - ag: Agricultural;  
+  - min: Mining;   
+  - con: Construction;  
+  - trad: Trade;
+  - tra: Transportation;
+  - fin: Finance;
+  - bus: Business & Repair Service;
+  - per: Personal Service;
+  - ent: Entertainment; 
+  - man: Manufacturing;
+  - pro: Professional & Related Service;
+  - pub: Public Administration;  
+ - Occupational dummies 
+  - OCC1: Professional, Technical and Kindred;  
+  - OCC2: Managers, Officials and Proprietors;  
+  - OCC3: Sales Workers;  
+  - OCC4: Clerical and kindred;  
+  - OCC5: Craftsmen, Foremen and kindred;  
+  - OCC6: Operatives and kindred;  
+  - OCC7: Laborers and farmers;  
+  - OCC8: Farm Laborers and Foreman;  
+  - OCC9: Service Workers.  
+                
+(1) Suppose we are now interested to find out whether union protection is useful to increase one's wage, design several multivarate regression with control variables and a TWFE regression to test it. Report the results in a table and give your own interpretation. (Hints: Consider which variables might be correlated with joining a union and wage and add them as control varialbes)
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+read_csv("wage.csv")  -> wage
+
+# simple bivariate regression
+lm(wage ~ union, data=wage) -> wage01
+summary(wage01)
+
+# add more control variables 
+wage$exper2 <- (wage$exper)^2
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar , data=wage) -> wage02
+summary(wage02)
+
+# add regional fixed effects
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne, data=wage) -> wage03
+summary(wage03)
+
+# add industry fixed effects
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub, data=wage) -> wage04
+summary(wage04)
+
+# add occupation fixed effects
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9, data=wage) -> wage05
+summary(wage05)
+
+# use TWFE
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9 + factor(nr) + factor(year), data=wage) -> wage06
+summary(wage06)
+
+# report the results from all six regressions
+tab_model(wage01, wage02, wage03, wage04, wage05, wage06, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          strings = NULL,
+          terms = c("mar", "exper", "exper2", "hlth", "black", "hisp", "school", "union"),
+          pred.labels = c("Union",
+                          "Experience",
+                          "Experience^2",
+                          "Health Disability (=1)",
+                          "Black",
+                          "Hispanic",
+                          "Years of School",
+                          "Married (=1)"),
+          dv.labels = c("", "Hourly", "Wage", "(Logged)", "", ""),
+          string.pred = "Coeffcient")
+
+# We run multiple regressions by regressing wage (`wage`) on the regressor of interest wage set by collective bargaining (`union`), and add the control variables, such as Experience, Health Disability, race, etc. We also use TWFE regression. 
+
+# To see if union protection is useful in increasing one's wage, let's pay attention to the first row, changes in the the coefficients of wage set by collective bargaining ($\beta$) after adding the control variables. We add other variables as control variables to solve the selection bias problem or omitted bias problem. 
+
+# When we control for Experience, Health Disability, Black, Hispanic, Years of School, Married, the magnitute is positive and the coefficient is about the same (~0.18). All of the coefficients are statistically significant from zero because p-value is less that 0.1% significance level. 
+
+# In the Column 1, it is a positive number and in the following columns, it also is a positive number with the same significance level. It means that before we control for anything and just look at relationship between wage and wage set through bargains and after, in both ways, higher wage set through bargaining -> higher wage. 
+
+# It means that bivariate regression in Column 1 is not biased by omitted variable bias. After we control for omitted variables to deal with this bias, we show a that the initial relationship was a true relationship, which is positive. higher wage set through bargaining -> higher wage.
+
+# We have also added TWFE to eliminate effects of year and individual identifier. Individual identifier is an obvious omitted variable, because it is time invariant individual characteristic that can affect one's income and his or her wage gotten by bargaining. Moreover, if there was some common shock to all at a particular year, e.g. an economic recession may both reduce one’s income and also delay one’s wage set by bargaining, then we absorb the effect of the year.
+
+# Talking about the null hypothesis of the wage set by unions, it was not rejected in any of the multivariate regressions.
+
+
+```
+
+(2) Do the results from Q1 change if you use classical SEs, robust SEs, or clustered SEs at individual level? Please compare and provide your interpretations. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+
+# Oop! Forgot to cluster the standard errors 
+# re-run the regressions using clustered standard errors at individual level 
+library(estimatr)
+
+lm_robust(wage ~ union, data=wage, clusters = nr, se_type = "stata") -> wage01_cl
+lm_robust(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar, data=wage, clusters = nr, se_type = "stata") -> wage02_cl
+lm_robust(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne, data=wage, clusters = nr, se_type = "stata") -> wage03_cl
+lm_robust(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub, data=wage, clusters = nr, se_type = "stata") -> wage04_cl
+lm_robust(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9, data=wage, clusters = nr, se_type = "stata") -> wage05_cl
+lm_robust(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9 + factor(nr) + factor(year), data=wage, clusters = nr, se_type = "stata") -> wage06_cl
+
+# output the results to excel
+# install.packages("huxtable")
+library(huxtable)
+table1 <- huxreg(wage01_cl, wage02_cl, wage03_cl, wage04_cl, wage05_cl, wage06_cl)
+quick_xlsx(table1, file = "table1.xlsx")
+
+# install.packages("panelView")
+library(panelView)
+panelview(wage ~ union, 
+          data = wage, index = c("nr","year"), 
+          xlab = "Year", ylab = "Individual", by.timing = TRUE)
+
+ggsave("panel_view_wage.pdf", width = 6, height = 4, device = cairo_pdf)
+
+
+# Looking at row union, we see that coefficients differ slightly, but they are still around 0.18 and the magnitude is always positive. The significance level is always at 0.1% level.
+
+
+# install.packages("mice")
+# install.packages("miceadds")
+# install.packages("estimatr")
+# install.packages("multiwayvcov")
+# library(mice)
+# library(miceadds)
+# library(estimatr)
+# fit <- lm.cluster(data=death, formula=mrate ~ legal + factor(state) + factor(year), cluster=death$state)
+# summary(fit)
+
+# install.packages("mice")
+# install.packages("miceadds")
+# install.packages("estimatr")
+# install.packages("multiwayvcov")
+# library(mice)
+# library(miceadds)
+# library(estimatr)
+# fit <- lm.cluster(data=death, formula=mrate ~ legal + factor(state) + factor(year), cluster=death$state)
+# summary(fit)
+
+# 
+# fit <- lm(mrate ~ legal + factor(state) + factor(year) , weights=pop, data=death)
+# summary(fit)
+
+```
+
+![Table1](/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ3096/Assignment_3/table1.png)
+
+
+(3) Plot the relationship between union and wage controlling for the TWFE. (Hints: Use anatomy regression to get residuals from TWFE)
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+## anatomy regression 
+
+# use TWFE
+lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9 + factor(nr) + factor(year), data=wage) -> poc_iv_rl
+resid(poc_iv_rl)-> union.res 
+
+cbind(wage, union.res) -> wage
+lm(wage ~ union.res, data=wage) -> anatomy_rl
+summary(anatomy_rl)
+
+### graph p.23
+wage %>% 
+  ggplot(aes(x=wage, y=union)) +
+  geom_point(color="red", alpha=0.2)+
+  geom_smooth(method="lm", se=F, color="red") +
+  geom_point(aes(x=union.res+mean(union), y=wage), color="blue", alpha=0.4) +
+  geom_smooth(aes(x=union.res+mean(union), y=wage), method="lm", se=F, color="blue") +
+  theme_minimal() +
+  labs(x="Union wage",
+       y="Wage")
+
+```
+
+(4) From the following panel view plot, we can see that some individuals in our samples had never joined union and some were always union member throughout the observation period. What if we remove these two groups of individual (whose union status is always 0 or 1) and re-run the TWFE, does it provides us a different estimations? Check this out by running some additional regressions. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+library(panelView)
+panelview(wage ~ union,
+          data = wage, index = c("nr","year"),
+          xlab = "Year", ylab = "Individual", by.timing = TRUE)
+
+# lm(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9 + factor(nr) + factor(year), data=wage) -> wage06
+# summary(wage06)
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+wage[wage$union == 1, ] 
+wage[wage$union == 0, ] 
+
+
+panelview(wage ~ union + exper + exper2 + hlth + black + hisp + school + mar + rur + s + nc + ne + ag + min + con + trad + tra + fin + bus + per + ent + man + pro + pub + occ1 + occ2 + occ3 + occ4 + occ5 + occ6 + occ7 + occ8 + occ9 + factor(nr) + factor(year), data = wage, index = c("nr","year"), 
+          xlab = "Year", ylab = "Individual", by.timing = TRUE)
+
+```
+
+(5) Does the effect of union protection on wage change over time? Design a regression to test it. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+read_csv("wage.csv")  -> wage
+
+fit <- lm(wage ~ union + factor(year), data=wage)
+summary(fit)
+
+# Yes, it rises over time. In 1981, the effect was  0.11973 and in 1987, it was 0.47098. All with significance levels of 0.1%.
+
+# # plot a regression line
+# abline(fit,col='red')
+
+# abline(lm(wage ~ union + factor(year), data=wage), col = "blue")
+
+```
+
+(6) Among the 12 industries, which one union had the greatest power in terms of raising wage for its participants? Design a regression to answer this question. (Hints: Use interaction terms) 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+  # - ag: Agricultural;  
+  # - min: Mining;   
+  # - con: Construction;  
+  # - trad: Trade;
+  # - tra: Transportation;
+  # - fin: Finance;
+  # - bus: Business & Repair Service;
+  # - per: Personal Service;
+  # - ent: Entertainment; 
+  # - man: Manufacturing;
+  # - pro: Professional & Related Service;
+  # - pub: Public Administration;
+library(sjPlot)
+
+# wage$union_ag<-wage$union*wage$ag
+
+# lm(wage ~ union, wage) -> mlr_7
+# lm(wage ~ union + ag, wage) -> mlr_8
+# lm(wage ~ union + ag + union_ag, wage) -> mlr_9
+# lm(wage ~ union + union_ag, wage) -> mlr_10
+# 
+# tab_model(mlr_7, mlr_8, mlr_9, mlr_10, 
+#           show.ci = F, 
+#           show.se = T, 
+#           collapse.se = T, 
+#           p.style = "stars", 
+#           show.intercept = F,
+#           pred.labels = c("Union",
+#                           "Agriculture Dummy",
+#                           "Union * Agriculture"),
+#           dv.labels = c("Average", "Test", "Score"),
+#           string.pred = "Coeffcient")
+
+# wage$union_min<-wage$union*wage$min
+# 
+# lm(wage ~ union, wage) -> mlr_7
+# lm(wage ~ union + min, wage) -> mlr_8
+# lm(wage ~ union + min + union_min, wage) -> mlr_9
+# lm(wage ~ union + union_min, wage) -> mlr_10
+# 
+# tab_model(mlr_7, mlr_8, mlr_9, mlr_10, 
+#           show.ci = F, 
+#           show.se = T, 
+#           collapse.se = T, 
+#           p.style = "stars", 
+#           show.intercept = F,
+#           pred.labels = c("Union",
+#                           "Agriculture Dummy",
+#                           "Union * Agriculture"),
+#           dv.labels = c("Average", "Test", "Score"),
+#           string.pred = "Coeffcient")
+
+wage$union_con<-wage$union*wage$con
+
+lm(wage ~ union, wage) -> mlr_7
+lm(wage ~ union + con, wage) -> mlr_8
+lm(wage ~ union + con + union_con, wage) -> mlr_9
+lm(wage ~ union + union_con, wage) -> mlr_10
+
+tab_model(mlr_7, mlr_8, mlr_9, mlr_10,
+          show.ci = F,
+          show.se = T,
+          collapse.se = T,
+          p.style = "stars",
+          show.intercept = F,
+          pred.labels = c("Union",
+                          "Agriculture Dummy",
+                          "Union * Agriculture"),
+          dv.labels = c("Average", "Test", "Score"),
+          string.pred = "Coeffcient")
+
+# All of them are close to having the same effect
+
+# The Effect remains positive and with the same significance level of 0.1%. The coefficient change, but now by much.
+
+```

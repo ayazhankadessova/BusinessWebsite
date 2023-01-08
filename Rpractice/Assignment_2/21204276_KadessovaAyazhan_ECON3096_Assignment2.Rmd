@@ -1,0 +1,389 @@
+---
+title: "ECON3096 - Casual Inference"
+subtitle: 'Assignment2'
+author: "CHEN Ting"
+date: "24 October, 2022"
+output:
+  html_document: null
+  theme: paper
+  pdf_document: default
+highlight: kate
+editor_options:
+  chunk_output_type: Console
+---
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+rm(list=ls()) # Clear up the enviornment 
+setwd("/Users/ayazhan/Desktop/HKBU_Y2_S1/Econ3096/Assignment_2") # Change the working directory as the path of the data file
+```
+
+Let us load in the **caschool.dta** data for Assignment 2.   
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+require(haven) # load in the haven library to read the dta file
+ClassSize <- read_dta("caschool.dta") # read the caschool data file into R
+# install.packages("ggplot2")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+library(ggplot2)
+library(sjPlot)
+library(sjlabelled)
+
+summary(ClassSize)
+```
+
+A data frame containing 420 observations on 14 variables.
+
+ - district: District code;  
+ - school: School name;  
+ - county: County name;  
+ - gr_span: Grade span of district;  
+ - enrl_tot: Total enrollment;  
+ - teachers: Number of teachers;  
+ - calw_pct:  Percent qualifying for CalWorks (income assistance);  
+ - meal_pct: Percent qualifying for reduced-price lunch;  
+ - computer: Number of computers;  
+ - testscr: Average test score; 
+ - comp_stu: Number of computers per student;  
+ - expn_stu: Number of expenditure per student;   
+ - str: Student-teacher ratio;  
+ - avginc: Average income;
+ - el_pct: Percent of English learners;
+ - read_scr: Average reading score;
+ - math_scr: Average math score.
+
+(1) Generate a dummy variable of high expenditure per student district by the mean of `expn_stu`, named it by `high_exp` (higher than the mean), and a corresponding dummy variable of low expenditure `low_exp` (lower or equal to the mean). 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Install fastDummies:
+install.packages('fastDummies')
+ClassSize$high_exp <- ifelse(ClassSize$expn_stu > mean(ClassSize$expn_stu), 1, 0)
+ClassSize$low_exp <- ifelse(ClassSize$expn_stu <= mean(ClassSize$expn_stu), 1, 0)
+
+```
+
+(2) Use both the subsample of high expenditure district and low expenditure districts, to draw a scatterplot of test scores (`testscr`) versus average income (`avginc`), and use color to denote the observations for the high/low expenditure subsamples. And add the linear regression lines by subsample to the plot. (Hints: Generate a plot similar to that on p.57 of the lecture 7 slides.)
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(ggplot2)
+
+# rnorm(420, mean=0, sd=sd(ClassSize$str)/2) -> error
+# cbind(ClassSize, error) -> ClassSize
+# ClassSize$str_error <- ClassSize$str-ClassSize$error
+
+
+legend_title <- "High Expenditure"
+
+ggplot(ClassSize, aes(x = avginc, y = testscr, color=factor(high_exp))) + 
+  geom_point(alpha=1/5, size=2) +
+  geom_smooth(method = "lm", se=FALSE)+
+  scale_color_manual(legend_title, values=c("red", "dodgerblue4")) + 
+  theme_minimal()+ 
+  labs(x = "Average Income", y = "Test Score")
+
+# ggplot2legend
+```
+
+(3) We are not interested in finding out the causal effect of average income (`avginc`) on the test scores (`testscr`). And we have reason to believe the number of expenditure per student (`comp_stu`) is an important omitted variable. Now run a multivariate regression to examine the effect of average income on the test scores controlling the effect of number of expenditure per student. Does the coefficient of average income remain significant after adding the control?  
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+# let expenditure stay the same, meaning we will see the relationship between test score and average income better 
+bivar.mod <- lm(formula = testscr ~ avginc , data = ClassSize)
+mult.mod <- lm(formula = testscr ~ avginc + expn_stu , data = ClassSize)
+summary(bivar.mod)
+summary(mult.mod)
+
+# Holding the expenditure per student constant means comparing scores of student with different Average Income but that have the same expenditure per student. If we compare two schools with the same expenditure per student, we can then better identify the impact of Average Income.
+
+# When we didn't control for the expenditure per student, one unit increase in Average Income was associated with an increase of test scores of 1.8785 point and was given ‘***’ 0.001 significance code, which means coefficient of average income is significant at 0.1 significance level.
+
+# When we controlled for the expenditure per student and tested relationship between Test Scores and Average Income, we see that one unit increase in Average Income was associated with an increase of test scores of 1.908711 point and coefficient of average income remained with 0.1 significance level, so the answer is YES. 
+
+# In general, after adding the control, the coefficient of average income increased, but not for a lot and significance level is still 0.1. So, expenditure per student is not significant omitted variable. We also don't know if the change is significant. 
+```
+
+(4) Let us do an anatomy regression instead. So that we can plot a scatter plot to show the effect of average income on test scores by excluding the effect of number of expenditure per student. (Hints: Generate a plot similar to that on p.5 of the lecture 7 slides by 
+  a) regress average income on number of expenditure per student,  
+  b) obtain the residual from this regression,  
+  c) plot a scatter plot between test scores and the residual adding a linear regression line.  
+You can choose whether to also exclude the variance of number of expenditure per student on the dependent variable as well.)  
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# regress average income on number of expenditure per student
+# didnt exclude expenditure per student on the dependent variable
+# avginc - independent variable
+
+library(ggplot2)
+
+lm(avginc ~ expn_stu, ClassSize) -> poc_iv_rl
+# obtain the residual from this regression
+resid(poc_iv_rl)-> avginc.res 
+
+# column bind function is used for merging two data frames together given that the number of rows in both the data frames are equal
+cbind(ClassSize, avginc.res) -> ClassSize
+lm(testscr ~ avginc.res, data=ClassSize) -> anatomy_rl
+summary(anatomy_rl)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# plot a scatter plot
+ClassSize %>% 
+  ggplot(aes(x=avginc, y=testscr)) +
+  geom_point(color="red", alpha=0.2)+
+  geom_smooth(method="lm", se=F, color="red") +
+  geom_point(aes(x=avginc.res+mean(avginc), y=testscr), color="blue", alpha=0.4) +
+  geom_smooth(aes(x=avginc.res+mean(avginc), y=testscr), method="lm", se=F, color="blue") +
+  theme_minimal() +
+  labs(x="Average Income",
+       y="Test Scores")
+
+# Red - with expenditure per student bias. Blue - without the expenditure per student bias.
+# After excluding the part that is correlated with expenditure per student (to exclude its effect) and plotting with the residual of average income, we see that Bias from expenditure per student is very small because both lines are almost the same. It is also helpful because we plot three variables in 2 dimensional space, which is good for visualization. 
+
+```
+
+(5) Suppose we are now interested in testing whether the effect of average income (`avginc`) on test scores (`testscr`) varies by the level (high versus low) expenditure 
+(`high_exp` and `low_exp`). Now design some regression tests to find out. (Hints: Utilize the high expenditure district dummy and an interaction term.)
+```{r}
+# install.packages("sjPlot")
+library(sjPlot)
+
+ClassSize$high_avginc<-ClassSize$avginc*ClassSize$high_exp
+
+lm(testscr ~ avginc , ClassSize) -> mlr_7
+lm(testscr ~ avginc + high_exp, ClassSize) -> mlr_8
+lm(testscr ~ avginc + high_exp + high_avginc, ClassSize) -> mlr_9
+lm(testscr ~ avginc + high_avginc, ClassSize) -> mlr_10
+
+tab_model(mlr_7, mlr_8, mlr_9, mlr_10, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          pred.labels = c("Average Income",
+                          "High Expenditure Dummy",
+                          "Average Income * High Exp Dummt"),
+          dv.labels = c("Average", "Test", "Score"),
+          string.pred = "Coeffcient")
+
+# The Effect remains positive and with the same significance level of 0.1%. The coefficient change, but now by much.
+```
+
+
+```{r}
+
+ClassSize$exp_low<-ClassSize$avginc*ClassSize$low_exp
+
+lm(testscr ~ avginc , ClassSize) -> mlr_14
+lm(testscr ~ avginc + low_exp, ClassSize) -> mlr_11
+lm(testscr ~ avginc + low_exp + exp_low, ClassSize) -> mlr_12
+lm(testscr ~ avginc + exp_low, ClassSize) -> mlr_13
+
+tab_model(mlr_14, mlr_8, mlr_9, mlr_10, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          pred.labels = c("Average Income",
+                          "High Expenditure Dummy",
+                          "Average Income * High Exp Dummt"),
+          dv.labels = c("Average", "Test", "Score"),
+          string.pred = "Coeffcient")
+
+# Same result. 
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# plot a scatter plot
+# rnorm(420, mean=0, sd=sd(ClassSize$str)/2) -> error
+# cbind(ClassSize, error) -> ClassSize
+# ClassSize$str_error <- ClassSize$str-ClassSize$error
+
+legend_title <- "Expenditure Income"
+# ClassSize$high_exp
+
+ggplot(ClassSize, aes(x = avginc, y = testscr, color=factor(high_exp))) + 
+  geom_point(alpha=1/5, size=2) +
+  geom_smooth(method = "lm", se=FALSE)+
+  scale_color_manual(legend_title, values=c("red", "dodgerblue4")) + 
+  theme_minimal()+ 
+  labs(x = "Expenditure per student", y = "Test Score")
+
+```
+
+(6) Suppose we now shift our interest to the relationship between number of expenditure per student (`expn_stu`) and the test score (`testscr`). And we want to find the best functional form to depict their relationship. Try different specifications of regression, pick the best functional form among them. 
+```{r}
+lm(testscr ~ expn_stu, ClassSize) -> linreg # num of expn per student
+lm(testscr ~ expn_stu + I(expn_stu^2), ClassSize) -> quadraticregr # num of expn per student ^ 2
+lm(testscr ~ log(expn_stu), ClassSize) -> logarithmregressionline # ln(num of expn per student)
+```
+
+```{r}
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+
+```
+
+
+```{r}
+tab_model(linreg, quadraticregr, logarithmregressionline, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          pred.labels = c("Linear Regression",
+                          "Quadratic Regression",
+                          "Logarithmic Regression"), 
+          dv.labels = c("Average", "Test", "Score", ""),
+          string.pred = "Coeffcient")
+
+# Choice: Quadratic Regression based on plots and...
+
+# Choosing based on R^2. R^2 represents the proportion of the variance for a dependent variable (Yi) that's explained by an independent variable. Quadratic Regression has the largest R^2 (1.073), which means it fits the data better and explains more variance from Yi. 
+
+# Choosing between two non-linear functional forms. We also see that 0.00 in the table is significant for Quadratic Regressions, which means there is indeed a quadratic relationship, a non-linear relationship in the data. That's why I want to choose a non-linear functional form. But, we can use either Quadratic or Logarithmic Regression to figure non-linear relationship between x and y. And how to choose between these two? Look at R^2 and choose Quadratic Regression because it explains more variance from Yi.(29.47 means if we increase x by 1%, y will increase by B1/100 unit of y. )
+
+# Choosing based on p-value.
+summary(linreg) #p-value: 7.99e-05
+summary(quadraticregr) #p-value: 2.981e-06
+summary(logarithmregressionline) #p-value: 0.0002642
+
+# -> chooose Quadratic. 
+
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Plotting
+
+## linear regression line 
+ggplot(data = ClassSize, mapping = aes(x = expn_stu,y=testscr)) +
+  geom_point(col="navy", alpha=0.3, size=4) + 
+  geom_smooth(method = "lm", se = FALSE, col="maroon")  +
+  labs(x = "Expenditure per Student", y = "Test Score",
+       title = "Students' Test Scores and Expenditure per Student") +
+  theme_classic()
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+## Quadratic regression line 
+ggplot(data = ClassSize, mapping = aes(x = expn_stu,y=testscr)) +
+  geom_point(col="navy", alpha=0.3, size=4) + 
+  geom_smooth(method = "lm", se = FALSE, col="maroon")  +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE, col="orange")  +
+  labs(x = "Expenditure per Student", y = "Test Score",
+       title = "Students' Test Scores and Expenditure per Student") + theme_classic()
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+## logarithm regression line 
+ggplot(data = ClassSize, mapping = aes(x = log(expn_stu),y=testscr)) +
+  geom_point(col="navy", alpha=0.3, size=4) + 
+  geom_smooth(method = "lm", formula = y ~ log(x) , se = FALSE, col="maroon")  +
+  labs(x = "Expenditure per Student", y = "Test Score",
+       title = "Students' Test Scores and Expenditure per Student") +
+  theme_classic()
+
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+## Quadratic regression line again
+# use mean here
+ggplot(data = ClassSize, mapping = aes(x = expn_stu,y=testscr)) +
+  geom_point(col="navy", alpha=0.3, size=4) + 
+  geom_smooth(method = "lm", se = FALSE, col="maroon")  +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE, col="orange")  +
+  geom_vline(xintercept=mean(ClassSize$expn_stu), linetype="dashed", size=.5) + 
+  annotate(geom = "text", x = mean(ClassSize$expn_stu)+6, y = 606,
+           label = "mean across district")+
+  labs(x = "Expenditure per Student", y = "Test Score",
+       title = "Students' Test Scores and Expenditure per Student") +
+  theme_classic()
+
+## Best Functional Form -> ## Quadratic regression line again -> shows the trend
+
+## Red line explains better.
+```
+
+(7) Run multiple regressions by regressing student's test scores (`testscr`) on the regressor of interest number of expenditure per student (`expn_stu`), and add the control variables 1) student-teacher ratio (`str`), 2) number of computers (`computer`), and 3) average income (`avginc`) one by one. And report the results (coefficients, se, and statistical significance using stars) in a regression table similar to that on p.24 of the lecture 7 slides. Write a few sentences to describe how the coefficients of number of expenditure per student ($\beta$) change after adding the control variables. Is it still statistically significant different from zero? The specifications of each column are as the following:  
+
+$$
+TestScore_i = \alpha + \beta Expenditure + \mu_i \:\:\:\:\:\: (1) \\
+TestScore_i = \alpha + \beta Expenditure + \gamma_1 STR + \mu_i \:\:\:\:\:\: (2) \\
+TestScore_i = \alpha + \beta Expenditure + \gamma_1 STR + \gamma_2 Computer + \mu_i \:\:\:\:\:\: (3) \\
+TestScore_i = \alpha + \beta Expenditure + \gamma_1 STR + \gamma_2 Computer + \gamma_3 AvgInc + \mu_i \:\:\:\:\:\: (4). \\
+$$
+    
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# ClassSize$avginc2 <- (ClassSize$avginc)^2
+
+lm(testscr ~ expn_stu , ClassSize) -> lr_1
+lm(testscr ~ expn_stu + str, ClassSize) -> mlr_1
+lm(testscr ~ expn_stu + str + computer, ClassSize) -> mlr_2
+lm(testscr ~ expn_stu + str + computer + avginc, ClassSize) -> mlr_3
+
+tab_model(lr_1, mlr_1, mlr_2, mlr_3, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          pred.labels = c("Expenditure Per Student",
+                          "+Student-Teacher Ratio",
+                          "+Computer", 
+                          "+ Average Income"),
+          dv.labels = c("Average", "Test", "Score", ""),
+          string.pred = "Coeffcient")
+
+# Look at the first row to see how the coefficients of number of expenditure per student ($\beta$) change after adding the control variables. We add other variables as control variables to solve the selection bias problem or omitted bias problem. 
+
+# When we control for Student Teacher Ratio in mlr_1, coefficient becomes smaller and it is no longer statistically significant from zero because p-value is greater than 5% significance level. It means that the effect of expenditure per student is no longer significant different from zero. Same is for when we add additional control, Computer per student in mlr_2. At Column 4, when we add Average income control, it is still a very small number 0.000.., but now it is significant at 5% level and most importantly..., Magnitude of coefficient changed and even became negative! In the Column 1, it is a positive number and in the Column 4, it is negative. It means that before we control for anything and just look at relationship between expenditure per student and test score, there is a positive result, which means higher expenditure per student -> higher score. It is also at 0.1 significance level. But, after controlling for omitted variables, such as Student Teacher Ratio, Computer per student, and Average Income, we find that the relationship between expenditure per student and test score is negative and significant at 5% level. It means that bivariate regression in Column 1 is biased by omitted variable bias. After we control for omitted variables to deal with this bias, we show a true relationship, which is negative. More expenditure -> less test score.
+
+# Talking about the null hypothesis of the coefficient number of expn per student = 0, it was not rejected in mlr_1 and mlr_2, but was rejected in mlr_3.
+
+```
+
+(8) Now replace the numeric variable of number of expenditure per student (`expn_stu`) with the dummy variables of high or low expenditure districts (`high_exp` and `low_exp`). How would it change the regression result? Do you prefer to use the linear variable of number of expenditure per student or the dummies? Why? (Hints: There is no *right* or *wrong* answer to the last question, simple illustrate your preference would suffice.)
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+lm(testscr ~ high_exp , ClassSize) -> lr_1
+lm(testscr ~ high_exp + str, ClassSize) -> mlr_1
+lm(testscr ~ high_exp + str + computer, ClassSize) -> mlr_2
+lm(testscr ~ high_exp + str + computer + avginc, ClassSize) -> mlr_3
+
+tab_model(lr_1, mlr_1, mlr_2, mlr_3, 
+          show.ci = F, 
+          show.se = T, 
+          collapse.se = T, 
+          p.style = "stars", 
+          show.intercept = F,
+          pred.labels = c("Expenditure Per Student",
+                          "+Student-Teacher Ratio",
+                          "+Computer", 
+                          "+ Average Income"),
+          dv.labels = c("Average", "Test", "Score", ""),
+          string.pred = "Coeffcient")
+
+# With constant, it is positive and significant at 0.1 percent level. With dummy variable, at first, expenditure per student is positive and significant at 5% level. After adding STR, it
+# became negative and less significant, but it was still significant. Now, It became negative and more significant. After Adding computer, it is still negative and insignificant. After adding average income, it is negative and significant at 5% level. 
+
+# Dummy variable is particularly useful when we deal with categorical variables (e.g. gender, lower/higher that the medium). We can use it here as well, since the expenditure is either low or high. Dummy variables change the regression intercept. You can use them to estimate means and differences in means. If there is a constant in the regression you can include only one less dummy as there are categories or no constant. 
+
+# Linear variable!
+
+# I prefer not to use dummy variable because it is usually an arbitrary division into different groups, such as here. Why does low expenditure means less than mean and high more than mean? I think it can lead to bias because we can choose what to focus on. 
+
+# Also, we can compare R^2. For Bivariate with numeric variable, it is 1.09. For Bivariate with dummy, it is 1.375. So, Bivariate with dummy fits the data better and explains variance of obervations/Yi with a higher power. Moreover, when we use number of expenditure per student as the linear variable we get smaller p-value than dummy for linear regression and many control variables. 
+
+```
+
