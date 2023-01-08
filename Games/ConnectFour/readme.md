@@ -1,5 +1,4 @@
-![](hkbu.png)
-# COMP2026/COMP2045 Programming Assignment 1 - Connect4 (2022-23 Semester 1)
+# Connect4 (COMP202/COMP2045 Programming Assignment 1, 2022-23 Semester 1)
 
 # Introduction
 
