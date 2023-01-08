@@ -1,5 +1,3 @@
-<img src="hkbu.png" alt="hkbu" width="300"/> 
-
 # COMP2026 Programming Assignment 3 - Tower Defense (2022-23 Semester 1)
 
 # Game Files in "td" Folder!
