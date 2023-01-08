@@ -26,8 +26,6 @@ public class Player {
 
     /**
      * Other constructor that specify the name of the player.
-     * 
-     * You need to initialize your data member properly.
      */
     public Player(String name) {
         // player name
@@ -44,8 +42,6 @@ public class Player {
      * Default constructor that set the name of the player as "Computer #1",
      * "Computer #2", "Computer #3"...
      * The number grows when there are more computer players being created.
-     * 
-     * You need to initialize your data member properly.
      */
     public Player() {
         // Give names to players who are computers based on count, which is a static var, so it is changed for the whole class, not for only one object
@@ -69,7 +65,7 @@ public class Player {
      * that the array will auto-resize to hold enough number of cards. The length of
      * pile should properly record the total number of cards taken by a player.
      * 
-     * Important: at the end of this method, you should also help removing all cards
+     * Important: at the end of this method, remove all cards
      * from the parameter array "cards".
      * 
      * 
@@ -179,8 +175,8 @@ public class Player {
 
     /**
      * Deal a card to a player. This should add a card to the variable hand and
-     * update the variable handCount. During this method, you do not need to resize
-     * the array. You can assume that a player will be dealt with at most 10 cards.
+     * update the variable handCount. During this method, no need to resize
+     * the array. Assume that a player will be dealt with at most 10 cards.
      * That is, the method will only be called 10 times on a player.
      * 
      * After each call of this method, the hand should be sorted properly according
@@ -250,9 +246,7 @@ public class Player {
     }
 
     /**
-     * To print the score pile. This method has completed for you.
-     * 
-     * You don't need to modify it and you should not modify it.
+     * To print the score pile. 
      */
     public void printPile() {
         for (Card c : pile) {
@@ -262,9 +256,7 @@ public class Player {
     }
 
     /**
-     * This is a getter of hand's card. This method has been completed for you
-     *
-     * You don't need to modify it and you should not modify it.
+     * This is a getter of hand's card. 
      * 
      * @param index - the index of card to take
      * @return - the card from the hand or null
