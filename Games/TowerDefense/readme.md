@@ -3,6 +3,8 @@
 
 ![](towerdefense.png)  
 
+# Game Files in "td" Folder!
+
 # Introduction
 
 As a part of Assignment Three for COMP2026, I implemented Tower Defense (TD) game following the [sample program](demo.jar) given. 
