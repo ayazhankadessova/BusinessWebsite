@@ -1,5 +1,4 @@
-current issues:
+## Business Website
 
-1. navbar not responsive for phone size
-2. feedback section pics cover text - resolved with @media in css
-3. submit doesnot give response , just reloads the page
+The landing page is a static website designed as a practice project to improve my proficiency in web development using HTML, CSS, and JavaScript. 
+It served me as an introduction to a fictional product, service, or brand, capturing the attention of visitors and encouraging them to explore further.
